@@ -1,24 +1,29 @@
-import { atom, selector } from 'recoil';
+import { atom, selector } from "recoil";
 
-//selector는 atom의 output을 변형시키는 도구
+export enum Categories {
+  "TO_DO" = "TO_DO",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
+}
+
 export interface IToDo {
   text: string;
   id: number;
-  category: 'TO_DO' | 'DOING' | 'DONE';
+  category: Categories;
 }
 
-export const categoryState = atom({
-  key: 'category',
-  default: 'TO_DO',
+export const categoryState = atom<Categories>({
+  key: "category",
+  default: Categories.TO_DO,
 });
 
 export const toDoState = atom<IToDo[]>({
-  key: 'toDo',
+  key: "toDo",
   default: [],
 });
 
 export const toDoSelector = selector({
-  key: 'toDoSelector',
+  key: "toDoSelector",
   get: ({ get }) => {
     const toDos = get(toDoState);
     const category = get(categoryState);
